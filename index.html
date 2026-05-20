@@ -307,14 +307,18 @@
     </div>
 
    <script>
-        document.getElementById('submitBtn').addEventListener('click', function() {
+       
+        document.getElementById('testForm').addEventListener('submit', function(event) {
+          
+            event.preventDefault();
+
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const messageEl = document.getElementById('message');
             
             let hasError = false;
             
-    
+      
             if (!nameInput.value.trim()) {
                 nameInput.classList.add('error');
                 hasError = true;
@@ -323,7 +327,7 @@
                 nameInput.classList.remove('error');
             }
             
-      
+           
             if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
                 emailInput.classList.add('error');
                 hasError = true;
@@ -332,7 +336,7 @@
                 emailInput.classList.remove('error');
             }
             
-      
+         
             if (hasError) {
                 messageEl.textContent = '❌ Please fill in all fields correctly!';
                 messageEl.className = 'message';
@@ -342,18 +346,17 @@
                 return;
             }
             
-       
+         
             messageEl.textContent = 'Form submitted!'; 
             messageEl.className = 'message success';
-          
             messageEl.style.backgroundColor = '';
             messageEl.style.color = '';
             messageEl.style.display = 'block';
-            
         
             const btn = document.getElementById('submitBtn');
             btn.style.transform = 'scale(0.98)';
-            setTimeout(() => btn.style.transform = '', 150);});
-        </script>
+            setTimeout(() => btn.style.transform = '', 150);
+        });
+    </script>
 </body>
 </html>
