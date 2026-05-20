@@ -306,15 +306,15 @@
         </div>
     </div>
 
-    <script>
+   <script>
         document.getElementById('submitBtn').addEventListener('click', function() {
             const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const messageEl = document.getElementById('message');
             
-            // Простая валидация
             let hasError = false;
             
+    
             if (!nameInput.value.trim()) {
                 nameInput.classList.add('error');
                 hasError = true;
@@ -323,6 +323,7 @@
                 nameInput.classList.remove('error');
             }
             
+      
             if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
                 emailInput.classList.add('error');
                 hasError = true;
@@ -331,50 +332,28 @@
                 emailInput.classList.remove('error');
             }
             
+      
             if (hasError) {
                 messageEl.textContent = '❌ Please fill in all fields correctly!';
-                messageEl.className = 'message success';
-                messageEl.style.background = '#ffebee';
+                messageEl.className = 'message';
+                messageEl.style.backgroundColor = '#ffebee';
                 messageEl.style.color = '#c62828';
                 messageEl.style.display = 'block';
-                
-                setTimeout(() => {
-                    messageEl.style.opacity = '0';
-                    setTimeout(() => {
-                        messageEl.style.display = 'none';
-                        messageEl.style.opacity = '1';
-                    }, 300);
-                }, 2000);
                 return;
             }
             
-
-            messageEl.textContent = 'Form submitted! ✨ Thank you, ' + nameInput.value.split(' ')[0] + ' ✨';
+       
+            messageEl.textContent = 'Form submitted!'; 
             messageEl.className = 'message success';
+          
+            messageEl.style.backgroundColor = '';
+            messageEl.style.color = '';
             messageEl.style.display = 'block';
             
-  
+        
             const btn = document.getElementById('submitBtn');
             btn.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                btn.style.transform = '';
-            }, 150);
-            
-  
-            setTimeout(() => {
-                messageEl.style.opacity = '0';
-                setTimeout(() => {
-                    messageEl.style.display = 'none';
-                    messageEl.style.opacity = '1';
-                }, 300);
-            }, 3000);
-        });
-        
-  
-        window.addEventListener('load', () => {
-            const container = document.querySelector('.form-container');
-            container.style.animation = 'slideUp 0.6s ease-out';
-        });
-    </script>
+            setTimeout(() => btn.style.transform = '', 150);});
+        </script>
 </body>
 </html>
