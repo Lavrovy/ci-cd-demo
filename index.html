@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CI/CD Demo | Contact Form</title>
-    <style>
+    <title>CI/CD Demo</title> <style>
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* Анимированные фоновые круги */
+
         body::before {
             content: '';
             position: absolute;
@@ -60,7 +59,7 @@
             }
         }
 
-        /* Стили карточки формы */
+   
         .form-container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -89,7 +88,7 @@
             }
         }
 
-        /* Заголовок */
+
         h1 {
             color: #333;
             font-size: 2.2rem;
@@ -125,7 +124,7 @@
             padding-bottom: 8px;
         }
 
-        /* Стили для группы полей */
+   
         .form-group {
             margin-bottom: 24px;
             animation: fadeIn 0.5s ease-out forwards;
@@ -150,7 +149,7 @@
             transition: color 0.3s ease;
         }
 
-        /* Инпуты */
+
         input {
             width: 100%;
             padding: 14px 16px;
@@ -174,7 +173,7 @@
             border-color: #764ba2;
         }
 
-        /* Кнопка */
+
         .btn-submit {
             width: 100%;
             padding: 14px;
@@ -215,7 +214,7 @@
             transform: translateY(1px);
         }
 
-        /* Сообщение */
+
         .message {
             margin-top: 24px;
             padding: 14px;
@@ -243,7 +242,6 @@
             border-left: 4px solid #28a745;
         }
 
-        /* Анимация пульсации для инпутов при ошибке (опционально) */
         input.error {
             border-color: #dc3545;
             animation: shake 0.3s ease-in-out;
@@ -255,7 +253,7 @@
             75% { transform: translateX(5px); }
         }
 
-        /* Стили для ссылок/футера */
+
         .footer {
             text-align: center;
             margin-top: 24px;
@@ -297,7 +295,7 @@
                 <input type="email" id="email" name="email" placeholder="Enter your email" value="john@example.com">
             </div>
             
-            <button id="submitBtn" class="btn-submit" type="button">✨ Отправить</button>
+            <button id="submitBtn" class="btn-submit" type="submit">✨ Отправить</button>
         </form>
         
         <p id="message" class="message" style="display: none;"></p>
@@ -307,9 +305,7 @@
     </div>
 
    <script>
-       
         document.getElementById('testForm').addEventListener('submit', function(event) {
-          
             event.preventDefault();
 
             const nameInput = document.getElementById('name');
@@ -318,7 +314,6 @@
             
             let hasError = false;
             
-      
             if (!nameInput.value.trim()) {
                 nameInput.classList.add('error');
                 hasError = true;
@@ -327,7 +322,6 @@
                 nameInput.classList.remove('error');
             }
             
-           
             if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
                 emailInput.classList.add('error');
                 hasError = true;
@@ -336,7 +330,6 @@
                 emailInput.classList.remove('error');
             }
             
-         
             if (hasError) {
                 messageEl.textContent = '❌ Please fill in all fields correctly!';
                 messageEl.className = 'message';
@@ -346,13 +339,12 @@
                 return;
             }
             
-         
             messageEl.textContent = 'Form submitted!'; 
             messageEl.className = 'message success';
             messageEl.style.backgroundColor = '';
             messageEl.style.color = '';
             messageEl.style.display = 'block';
-        
+            
             const btn = document.getElementById('submitBtn');
             btn.style.transform = 'scale(0.98)';
             setTimeout(() => btn.style.transform = '', 150);
