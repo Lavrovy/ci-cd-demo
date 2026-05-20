@@ -3,24 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CI/CD Demo</title>
+    <title>CI/CD Demo | Contact Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Анимированные фоновые круги */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -150px;
+            left: -150px;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -200px;
+            right: -200px;
+            animation: float 25s infinite ease-in-out reverse;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            33% {
+                transform: translate(30px, -30px) rotate(120deg);
+            }
+            66% {
+                transform: translate(-20px, 20px) rotate(240deg);
+            }
+        }
+
+        /* Стили карточки формы */
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.6s ease-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Заголовок */
+        h1 {
+            color: #333;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 3s infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-size: 100% 100%;
+            }
+            50% {
+                background-size: 200% 200%;
+                background-position: right center;
+            }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            border-bottom: 2px solid #eee;
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 8px;
+        }
+
+        /* Стили для группы полей */
+        .form-group {
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        /* Инпуты */
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: scale(1.01);
+        }
+
+        input:hover {
+            border-color: #764ba2;
+        }
+
+        /* Кнопка */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:active {
+            transform: translateY(1px);
+        }
+
+        /* Сообщение */
+        .message {
+            margin-top: 24px;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            animation: messagePop 0.4s ease-out;
+        }
+
+        @keyframes messagePop {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .message.success {
+            background: linear-gradient(135deg, #d4fc79, #96e6a1);
+            color: #1e7e34;
+            border-left: 4px solid #28a745;
+        }
+
+        /* Анимация пульсации для инпутов при ошибке (опционально) */
+        input.error {
+            border-color: #dc3545;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Стили для ссылок/футера */
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.75rem;
+            color: #aaa;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 640px) {
+            .form-container {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            input, .btn-submit {
+                padding: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Contact Form</h1>
-    <form id="testForm">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="John">
-        <br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" value="john@example.com">
-        <br><br>
-        <button id="submitBtn" type="button">Отправить</button>
-    </form>
-    <p id="message"></p>
+    <div class="form-container">
+        <h1>📬 Contact Form</h1>
+        <div style="text-align: center;">
+            <div class="subtitle">We'd love to hear from you ✨</div>
+        </div>
+        
+        <form id="testForm">
+            <div class="form-group">
+                <label for="name">👤 Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" value="John">
+            </div>
+            
+            <div class="form-group">
+                <label for="email">📧 Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" value="john@example.com">
+            </div>
+            
+            <button id="submitBtn" class="btn-submit" type="button">✨ Отправить</button>
+        </form>
+        
+        <p id="message" class="message" style="display: none;"></p>
+        <div class="footer">
+            Powered by CI/CD Pipeline 🚀
+        </div>
+    </div>
 
     <script>
         document.getElementById('submitBtn').addEventListener('click', function() {
-            document.getElementById('message').innerText = 'Form submitted!';
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const messageEl = document.getElementById('message');
+            
+            // Простая валидация
+            let hasError = false;
+            
+            if (!nameInput.value.trim()) {
+                nameInput.classList.add('error');
+                hasError = true;
+                setTimeout(() => nameInput.classList.remove('error'), 500);
+            } else {
+                nameInput.classList.remove('error');
+            }
+            
+            if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
+                emailInput.classList.add('error');
+                hasError = true;
+                setTimeout(() => emailInput.classList.remove('error'), 500);
+            } else {
+                emailInput.classList.remove('error');
+            }
+            
+            if (hasError) {
+                messageEl.textContent = '❌ Please fill in all fields correctly!';
+                messageEl.className = 'message success';
+                messageEl.style.background = '#ffebee';
+                messageEl.style.color = '#c62828';
+                messageEl.style.display = 'block';
+                
+                setTimeout(() => {
+                    messageEl.style.opacity = '0';
+                    setTimeout(() => {
+                        messageEl.style.display = 'none';
+                        messageEl.style.opacity = '1';
+                    }, 300);
+                }, 2000);
+                return;
+            }
+            
+
+            messageEl.textContent = '✨ Form submitted successfully! Thank you, ' + nameInput.value.split(' ')[0] + ' ✨';
+            messageEl.className = 'message success';
+            messageEl.style.display = 'block';
+            
+  
+            const btn = document.getElementById('submitBtn');
+            btn.style.transform = 'scale(0.98)';
+            setTimeout(() => {
+                btn.style.transform = '';
+            }, 150);
+            
+  
+            setTimeout(() => {
+                messageEl.style.opacity = '0';
+                setTimeout(() => {
+                    messageEl.style.display = 'none';
+                    messageEl.style.opacity = '1';
+                }, 300);
+            }, 3000);
+        });
+        
+  
+        window.addEventListener('load', () => {
+            const container = document.querySelector('.form-container');
+            container.style.animation = 'slideUp 0.6s ease-out';
         });
     </script>
 </body>
