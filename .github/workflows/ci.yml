@@ -9,35 +9,32 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+        
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
-      
+          
       - name: Install dependencies
-        run: npm ci   # использует package-lock.json для точной установки
-      
+        run: npm ci
+        
       - name: Run tests
         run: npm test
-        
 
-          deploy:
-    needs: test           # ждёт успешного завершения тестов
+  deploy:
+    needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'   # только для main
-    
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+        
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./   # публикуем всё, что в корне (index.html)
+          publish_dir: ./
